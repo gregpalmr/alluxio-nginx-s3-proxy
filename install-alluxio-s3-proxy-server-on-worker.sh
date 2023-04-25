@@ -40,7 +40,7 @@
 #
 #                curl -i --output ./part_00000.snappy.parquet \
 #                               -H \"Authorization: AWS4-HMAC-SHA256 Credential=<my_alluxio_user>/\" \
-#                               -X GET http://<alluxio-worker-node>:39998/my_bucket/my_data_set/part_00000.snappy.parquet"
+#                               -X GET http://<alluxio-prod-worker>:39998/my_bucket/my_dataset/part_00000.snappy.parquet"
 #
 
 
@@ -155,10 +155,6 @@ http {
   scgi_temp_path        /tmp/alluxio-nginx 1 2;
   uwsgi_temp_path       /tmp/alluxio-nginx 1 2;
 
-  upstream alluxio {
-    server 127.0.0.1:39999;
-  }
-
   server {
     listen 39998;
     server_name  _;
@@ -169,7 +165,7 @@ http {
       proxy_send_timeout    300s;
       proxy_read_timeout    300s;
 
-      proxy_pass http://alluxio/api/v1/s3\$uri\$is_args\$args;
+      proxy_pass http://127.0.0.1:39999/api/v1/s3\$uri\$is_args\$args;
       proxy_set_header Host \$host:\$server_port;
     }
   }
@@ -285,6 +281,6 @@ echo "  Then, test the Nginx proxy with the \"curl\" command like this:"
 echo
 echo "    curl -i --output ./part_00000.snappy.parquet \\ "
 echo "         -H \"Authorization: AWS4-HMAC-SHA256 Credential=<my_alluxio_user>/\" \\ "
-echo "         -X GET http://<alluxio-worker-node>:39998/my_bucket/my_data_set/part_00000.snappy.parquet"
+echo "         -X GET http://<alluxio-prod-worker>:39998/my_bucket/my_dataset/part_00000.snappy.parquet"
 echo
 # end of script
