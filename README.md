@@ -133,7 +133,7 @@ Connect to the nos_user database as the new user and create an S3 AUTHORIZATION 
      
 c. Create a database table that points to the Alluxio S3 bucket
 
-Connect to the nos_user database as the new user and create an foreign table that references an Alluxio S3 bucket. Note that the <alluxio-prod-worker> is the DNS load balanced hostname and port 39998 is the Nginx port number on the Alluxio worker nodes.
+Connect to the nos_user database as the new user and create an foreign table that references an Alluxio S3 bucket. Note that the alluxio-prod-worker is the DNS load balanced hostname and that port 39998 is the Nginx port number on the Alluxio worker nodes.
 
      CREATE FOREIGN TABLE my_alluxio_data
      , EXTERNAL SECURITY  Alluxio_S3_PROD
