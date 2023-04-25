@@ -143,7 +143,7 @@ error_log $THIS_ALLUXIO_HOME/logs/s3_proxy.out info;
 pid /tmp/alluxio-nginx/nginx.pid;
 
 events {
-  worker_connections 768;
+  worker_connections 3000;
 }
 
 http {
