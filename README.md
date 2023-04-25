@@ -147,12 +147,10 @@ d. Query the foreign table
 
 TBD
 
---
-	
+---
 TODO List:
 
 - Enable Nginx to accept and pass on Alluxio SSL certificates for TLS (Alluxio Enterprise Edition only)
 
---
-
+---
 Please direct questions or comments to greg.palmer@alluxio.com
