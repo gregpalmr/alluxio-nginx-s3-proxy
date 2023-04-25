@@ -77,7 +77,7 @@ Have your networking team configure your organization's domain name service (DNS
      address=/alluxio-prod-worker.mycompany.com/10.0.2.2
      address=/alluxio-prod-worker.mycompany.com/10.0.2.3
 
-If you have dedicated load balancers (i.e. F5), then you can configure them to provide this load balancing service. With load balancing enabled, client side applications like Spark, Trino, Presto will only reference the single hostname and will be provided with rotating ip addresses for Alluxio workers.
+If you have dedicated load balancers (i.e. F5), then you can configure them to provide this load balancing service. With load balancing enabled, client side applications like Spark, Trino, and Presto will only reference the single hostname and will be provided with rotating ip addresses for Alluxio workers.
 
 ## Access Alluxio with Teradata NOS
 
@@ -97,8 +97,8 @@ Before creating the external tables, modify the Teradata NOS configuration to al
           # Disable HTTPS (Disable HTTPS = True)
           MODIFY NOS 101 = T
 	  
-	  # Save the changes
-	  WRITE
+          # Save the changes
+          WRITE
 
 ### Step 2. Create a user with privilages to access external NOS tables.
 
