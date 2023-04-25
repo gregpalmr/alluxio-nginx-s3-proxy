@@ -13,11 +13,11 @@ See: https://docs.alluxio.io/os/user/stable/en/Overview.html
 
 One method that users and applications use to submit read/write requests to Alluxio is to use the Alluxio S3 API. The Alluxio S3 API exposes an S3 "endpoint" and that endpoint includes an API version specification like this:
 
-     http://alluxio-s3-api-server-hostname:39999/api/v1/s3/my_bucket/my_dataset
+     http://alluxio-worker:39999/api/v1/s3/my_bucket/my_dataset
 
 That S3 endpoint is used by S3 clients when they connect to the Alluxio S3 API. For example, the AWS S3 command line interface (CLI) can connect to Alluxio using the --endpoint option like this:
 
-     aws s3 ls s3://my_bucket/my_dataset/ --endpoint http://localhost:39999/api/v1/s3
+     aws s3 ls s3://my_bucket/my_dataset/ --endpoint http://alluxio-worker:39999/api/v1/s3
 
 Some query engines, including Teradata NOS and Vertica, do not allow users to specify the S3 endpoint as a property, and they do not expect to see an API version in the S3 URI (i.e. /api/v1/s3/). 
 
@@ -60,7 +60,7 @@ Use a curl command to issue an HTTP request that invokes the Nginx proxy so it c
 
      curl -i --output ./part_00000.snappy.parquet \
          -H \"Authorization: AWS4-HMAC-SHA256 Credential=<my_alluxio_user>/\" \
-         -X GET http://<alluxio-worker-node>:39998/my_bucket/my_dataset/part_00000.snappy.parquet
+         -X GET http://<alluxio-worker>:39998/my_bucket/my_dataset/part_00000.snappy.parquet
 
 ### Step 2. Configure round-robin load balancing in the DNS server
 
@@ -127,11 +127,11 @@ Connect to the nos_user database as the new user and create an S3 AUTHORIZATION 
      
 c. Create a database table that points to the Alluxio S3 bucket
 
-Connect to the nos_user database as the new user and create an foreign table that references an Alluxio S3 bucket. Note that the <alluxio-worker> is the DNS load balanced hostname and port 39998 is the Nginx port number on the Alluxio worker nodes.
+Connect to the nos_user database as the new user and create an foreign table that references an Alluxio S3 bucket. Note that the <alluxio-prod-worker> is the DNS load balanced hostname and port 39998 is the Nginx port number on the Alluxio worker nodes.
 
      CREATE FOREIGN TABLE my_alluxio_data
      , EXTERNAL SECURITY  Alluxio_S3_PROD
-     USING (LOCATION('/s3/<alluxio-worker>:39998/my_bucket/my_dataset/') );
+     USING (LOCATION('/s3/<alluxio-prod-worker>:39998/my_bucket/my_dataset/') );
 
 d. Query the foreign table
 	
