@@ -50,12 +50,36 @@ to this:
 
 ## Deploying Nginx as an Alluxio S3 proxy
 
-### Step 1. Run the install-alluxio-s3-proxy-server-on-worker.sh BASH script on each Alluxio worker node where the current Alluxio S3 API server is running.
+### Step 1. Install and configure Nginx on Alluxio workers
+
+Run the install-alluxio-s3-proxy-server-on-worker.sh BASH script on each Alluxio worker node where the current Alluxio S3 API server is running.
 
 a. On each Alluxio worker node, download and run the BASH script: 
 
-     wget 
+     wget https://raw.githubusercontent.com/gregpalmr/alluxio-nginx-s3-proxy/main/install-alluxio-s3-proxy-server-on-worker.sh
+     
+     sudo bash install-alluxio-s3-proxy-server-on-worker.sh
+     
+b. View the Nginx configuration file that was saved in the Alluxio conf directory:
 
+     cat $ALLUXIO_HOME/conf/alluxio-s3-proxy.conf
+
+c. Start the Nginx server using the custom start script:
+
+     $ALLUXIO_HOME/bin/alluxio-start-s3-proxy.sh
+     
+
+d. Test the Nginx proxy server.
+
+Use the curl command to issue an HTTP request that invokes the Nginx proxy so it can forward the request to the real Alluxio S3 API service. Something like this:
+
+     curl -i --output ./part_00000.snappy.parquet \
+         -H \"Authorization: AWS4-HMAC-SHA256 Credential=<my_alluxio_user>/\" \
+         -X GET http://<alluxio-worker-node>:39998/my_bucket/my_data_set/part_00000.snappy.parquet
+
+Step 2. Create a database table that points to the Alluxio S3 bucket
+
+TBD
 --
 
 Please direct questions or comments to greg.palmer@alluxio.com
