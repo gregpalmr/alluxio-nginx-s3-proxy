@@ -62,6 +62,12 @@ Use a curl command to issue an HTTP request that invokes the Nginx proxy so it c
          -H \"Authorization: AWS4-HMAC-SHA256 Credential=<my_alluxio_user>/\" \
          -X GET http://<alluxio-worker>:39998/my_bucket/my_dataset/part_00000.snappy.parquet
 
+e. Optionally, stop the Nginx server:
+
+     sudo su - my_alluxio_user
+
+     $ALLUXIO_HOME/bin/alluxio-stop-s3-proxy.sh
+     
 ### Step 2. Configure round-robin load balancing in the DNS server
 
 Have your networking team configure your organization's domain name service (DNS) to provide simple round-robin load balancing across all of your Alluxio worker node servers. Most Linux based DNS servers would be configured like this:
