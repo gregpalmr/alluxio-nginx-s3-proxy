@@ -40,8 +40,18 @@ Run the install-alluxio-s3-proxy-server-on-worker.sh BASH script on each Alluxio
 a. On each Alluxio worker node, download and run the BASH script as the root user or as a user with SUDO privileges: 
 
      wget https://raw.githubusercontent.com/gregpalmr/alluxio-nginx-s3-proxy/main/install-alluxio-s3-proxy-server-on-worker.sh
-     
+
+If you are using an HTTP proxy server to get to the Internet, then add the options to enable proxy server access in the wget command. Like this:
+
+     wget -e use_proxy=yes -e https_proxy=https://<myproxy-server>:<proxy port> https://raw.githubusercontent.com/gregpalmr/alluxio-nginx-s3-proxy/main/install-alluxio-s3-proxy-server-on-worker.sh
+
+Then run the script a command like this:
+
      sudo bash install-alluxio-s3-proxy-server-on-worker.sh
+     
+     mkdir -p /tmp/alluxio-nginx
+     
+     chown -R <alluxio_user>:<alluxio_group> /tmp/alluxio-nginx
      
 b. View the Nginx configuration file that was saved in the Alluxio conf directory:
 
@@ -52,7 +62,6 @@ c. Start the Nginx server as the user that runs the Alluxio processes:
      sudo su - my_alluxio_user
 
      $ALLUXIO_HOME/bin/alluxio-start-s3-proxy.sh
-     
 
 d. Test the Nginx proxy server
 
