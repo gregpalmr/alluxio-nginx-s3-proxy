@@ -65,11 +65,17 @@ c. Start the Nginx server as the user that runs the Alluxio processes:
 
 d. Test the Nginx proxy server
 
-Use a curl command to issue an HTTP request that invokes the Nginx proxy so it can forward the request to the real Alluxio S3 API service. Something like this:
+Test the integration between the Nginx server and the Alluxio S3 endpoint. Use a curl command to issue an HTTP request that invokes the Nginx proxy so it can forward the request to the real Alluxio S3 API service. Something like this:
 
      curl -i --output ./part_00000.snappy.parquet \
          -H \"Authorization: AWS4-HMAC-SHA256 Credential=<my_alluxio_user>/\" \
          -X GET http://<alluxio-worker>:39998/my_bucket/my_dataset/part_00000.snappy.parquet
+
+If you have the AWS S3 CLI installed, you can test the integration between Nginx and Alluxio with a command like this:
+
+     AWS_ACCESS_KEY_ID="alluxio" AWS_SECRET_ACCESS_KEY="NA" \
+      aws s3 ls s3:///my_bucket/my_dataset/
+          --endpoint http://<alluxio-worker>:39998
 
 e. Optionally, stop the Nginx server:
 
